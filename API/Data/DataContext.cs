@@ -14,6 +14,7 @@ public class DataContext(DbContextOptions options) : IdentityDbContext<AppUser, 
     public DbSet<Household> Households { get; set; }
     public DbSet<UserHousehold> UserHouseholds { get; set; }
     public DbSet<ProductHousehold> ProductHouseholds { get; set; }
+    public DbSet<RefreshToken> RefreshTokens { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
