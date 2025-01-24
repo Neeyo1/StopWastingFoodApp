@@ -18,6 +18,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddDbContext<DataContext>(opt =>

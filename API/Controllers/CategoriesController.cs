@@ -47,7 +47,7 @@ public class CategoriesController(IUnitOfWork unitOfWork, IMapper mapper) : Base
 
         mapper.Map(categoryUpdateDto, category);
 
-        if (await unitOfWork.Complete()) return Ok(mapper.Map<CategoryDto>(category));
+        if (await unitOfWork.Complete()) return NoContent();
         return BadRequest("Failed to edit category");
     }
 
