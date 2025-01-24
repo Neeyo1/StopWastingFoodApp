@@ -46,8 +46,8 @@ public class AccountController(UserManager<AppUser> userManager, ITokenService t
         var resultCreateUser = await userManager.CreateAsync(user, registerDto.Password);
         if (!resultCreateUser.Succeeded) return BadRequest(resultCreateUser.Errors);
 
-        // var resultAddToRole = await userManager.AddToRoleAsync(user, "User");
-        // if (!resultAddToRole.Succeeded) return BadRequest(resultAddToRole.Errors);
+        var resultAddToRole = await userManager.AddToRoleAsync(user, "User");
+        if (!resultAddToRole.Succeeded) return BadRequest(resultAddToRole.Errors);
 
         var userToReturn = mapper.Map<UserDto>(user);
         userToReturn.Token = await tokenService.CreateToken(user);
