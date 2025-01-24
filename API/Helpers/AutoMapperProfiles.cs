@@ -1,4 +1,5 @@
 using API.DTOs;
+using API.DTOs.Category;
 using API.Entities;
 using AutoMapper;
 
@@ -11,6 +12,8 @@ public class AutoMapperProfiles : Profile
         CreateMap<AppUser, UserDto>();
         CreateMap<RegisterDto, AppUser>();
         CreateMap<LoginDto, AppUser>();
+        CreateMap<Category, CategoryDto>();
+        CreateMap<CategoryCreateDto, Category>();
 
         CreateMap<string, DateOnly>().ConvertUsing(s => DateOnly.Parse(s));
         CreateMap<string, TimeOnly>().ConvertUsing(s => TimeOnly.Parse(s));
