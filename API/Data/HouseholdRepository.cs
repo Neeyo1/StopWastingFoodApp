@@ -41,4 +41,10 @@ public class HouseholdRepository(DataContext context, IMapper mapper) : IHouseho
         return await context.Households
             .FindAsync(householdId);
     }
+
+    public async Task<UserHousehold?> GetUserHouseholdByIdsAsync(int userId, int householdId)
+    {
+        return await context.UserHouseholds
+            .FirstOrDefaultAsync(x => x.UserId == userId && x.HouseholdId == householdId);
+    }
 }

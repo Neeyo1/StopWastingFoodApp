@@ -10,4 +10,5 @@ public interface IHouseholdRepository
     Task<IEnumerable<HouseholdDto>> GetHouseholdsAsync();
     Task<Household?> GetHouseholdByIdAsync(int householdId);
     Task<Household?> GetHouseholdDetailedByIdAsync(int householdId);
+    Task<UserHousehold?> GetUserHouseholdByIdsAsync(int userId, int householdId);
 }
