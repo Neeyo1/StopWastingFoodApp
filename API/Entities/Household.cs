@@ -4,7 +4,7 @@ public class Household
 {
     public int Id { get; set; }
     public required string Name { get; set; }
-    public DateTime CreateDate { get; set; }
+    public DateTime CreateDate { get; set; } = DateTime.UtcNow;
 
     //Household - AppUser
     public int OwnerId { get; set; }
