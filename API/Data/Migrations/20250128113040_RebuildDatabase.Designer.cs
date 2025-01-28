@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250123160835_AddRefreshTokenEntity")]
-    partial class AddRefreshTokenEntity
+    [Migration("20250128113040_RebuildDatabase")]
+    partial class RebuildDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -188,6 +188,38 @@ namespace API.Data.Migrations
                     b.ToTable("Households");
                 });
 
+            modelBuilder.Entity("API.Entities.Inventory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("BuyDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("ExpireDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("HouseholdId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HouseholdId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Inventories");
+                });
+
             modelBuilder.Entity("API.Entities.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -208,30 +240,6 @@ namespace API.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("API.Entities.ProductHousehold", b =>
-                {
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HouseholdId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("BuyDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("ExpireDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductId", "HouseholdId");
-
-                    b.HasIndex("HouseholdId");
-
-                    b.ToTable("ProductHouseholds");
                 });
 
             modelBuilder.Entity("API.Entities.RefreshToken", b =>
@@ -391,6 +399,25 @@ namespace API.Data.Migrations
                     b.Navigation("Owner");
                 });
 
+            modelBuilder.Entity("API.Entities.Inventory", b =>
+                {
+                    b.HasOne("API.Entities.Household", "Household")
+                        .WithMany("Inventories")
+                        .HasForeignKey("HouseholdId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Entities.Product", "Product")
+                        .WithMany("Inventories")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Household");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("API.Entities.Product", b =>
                 {
                     b.HasOne("API.Entities.Category", "Category")
@@ -400,25 +427,6 @@ namespace API.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("API.Entities.ProductHousehold", b =>
-                {
-                    b.HasOne("API.Entities.Household", "Household")
-                        .WithMany("ProductHouseholds")
-                        .HasForeignKey("HouseholdId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("API.Entities.Product", "Product")
-                        .WithMany("ProductHouseholds")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Household");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("API.Entities.UserHousehold", b =>
@@ -497,14 +505,14 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Household", b =>
                 {
-                    b.Navigation("ProductHouseholds");
+                    b.Navigation("Inventories");
 
                     b.Navigation("UserHouseholds");
                 });
 
             modelBuilder.Entity("API.Entities.Product", b =>
                 {
-                    b.Navigation("ProductHouseholds");
+                    b.Navigation("Inventories");
                 });
 #pragma warning restore 612, 618
         }

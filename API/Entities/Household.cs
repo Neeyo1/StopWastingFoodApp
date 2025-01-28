@@ -13,6 +13,6 @@ public class Household
     //Household - UserHousehold
     public ICollection<UserHousehold> UserHouseholds { get; set; } = [];
 
-    //Household - ProductHousehold
-    public ICollection<ProductHousehold> ProductHouseholds { get; set; } = [];
+    //Household - Inventory
+    public ICollection<Inventory> Inventories { get; set; } = [];
 }

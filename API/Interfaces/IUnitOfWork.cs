@@ -7,6 +7,7 @@ public interface IUnitOfWork
     IProductRepository ProductRepository { get; }
     IHouseholdRepository HouseholdRepository { get; }
     IUserRepository UserRepository { get; }
+    IInventoryRepository InventoryRepository { get; }
     Task<bool> Complete();
     bool HasChanges();
 }

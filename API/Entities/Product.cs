@@ -9,6 +9,6 @@ public class Product
     public int CategoryId { get; set; }
     public Category Category { get; set; } = null!;
 
-    //Product - ProductHousehold
-    public ICollection<ProductHousehold> ProductHouseholds { get; set; } = [];
+    //Product - Inventory
+    public ICollection<Inventory> Inventories { get; set; } = [];
 }

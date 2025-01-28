@@ -1,6 +1,7 @@
 using API.DTOs;
 using API.DTOs.Category;
 using API.DTOs.Household;
+using API.DTOs.Inventory;
 using API.DTOs.Product;
 using API.Entities;
 using AutoMapper;
@@ -23,6 +24,8 @@ public class AutoMapperProfiles : Profile
             .ForMember(x => x.Members, y => y.MapFrom(z => z.UserHouseholds.Select(s => s.User)));
         CreateMap<HouseholdCreateDto, Household>();
         CreateMap<UserHousehold, MemberDto>();
+        CreateMap<Inventory, InventoryDto>();
+        CreateMap<InventoryCreateDto, Inventory>();
 
         CreateMap<string, DateOnly>().ConvertUsing(s => DateOnly.Parse(s));
         CreateMap<string, TimeOnly>().ConvertUsing(s => TimeOnly.Parse(s));

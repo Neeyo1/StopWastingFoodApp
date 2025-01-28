@@ -4,5 +4,7 @@ public enum FreshStatus
 {
     Fresh,
     ExpireSoon,
-    Expired
+    Expired,
+    Consumed,
+    ThrownOut
 }

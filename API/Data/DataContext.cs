@@ -13,7 +13,7 @@ public class DataContext(DbContextOptions options) : IdentityDbContext<AppUser, 
     public DbSet<Product> Products { get; set; }
     public DbSet<Household> Households { get; set; }
     public DbSet<UserHousehold> UserHouseholds { get; set; }
-    public DbSet<ProductHousehold> ProductHouseholds { get; set; }
+    public DbSet<Inventory> Inventories { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -45,21 +45,6 @@ public class DataContext(DbContextOptions options) : IdentityDbContext<AppUser, 
         builder.Entity<UserHousehold>()
             .HasOne(x => x.Household)
             .WithMany(x => x.UserHouseholds)
-            .HasForeignKey(x => x.HouseholdId)
-            .OnDelete(DeleteBehavior.Cascade);
-        
-        //Product - HouseHold
-        builder.Entity<ProductHousehold>().HasKey(x => new {x.ProductId, x.HouseholdId});
-
-        builder.Entity<ProductHousehold>()
-            .HasOne(x => x.Product)
-            .WithMany(x => x.ProductHouseholds)
-            .HasForeignKey(x => x.ProductId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        builder.Entity<ProductHousehold>()
-            .HasOne(x => x.Household)
-            .WithMany(x => x.ProductHouseholds)
             .HasForeignKey(x => x.HouseholdId)
             .OnDelete(DeleteBehavior.Cascade);
     }
